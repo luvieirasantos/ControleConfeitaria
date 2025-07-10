@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useGastos } from "../context/GastosContext";
 import type { Gasto, Pagamento } from "../context/GastosContext";
 
@@ -15,8 +15,6 @@ export default function Gastos() {
   const [periodo, setPeriodo] = useState<"7" | "30" | "personalizado">("7");
   const [dataInicio, setDataInicio] = useState(getDateNDaysAgo(7));
   const [dataFim, setDataFim] = useState(new Date().toISOString().split("T")[0]);
-  const [detalheId, setDetalheId] = useState<number | null>(null);
-  const [editandoId, setEditandoId] = useState<number | null>(null);
 
   // Para edição
   const [editGasto, setEditGasto] = useState<Gasto | null>(null);
@@ -55,58 +53,11 @@ export default function Gastos() {
   function handleDeletar(id: number) {
     if (confirm("Tem certeza que deseja deletar este gasto?")) {
       deletarGasto(id);
-      setDetalheId(null);
-      setEditandoId(null);
     }
   }
 
   function startEdit(gasto: Gasto) {
     setEditGasto({ ...gasto, pagamentos: [...gasto.pagamentos] });
-    setEditandoId(gasto.id);
-    setDetalheId(null);
-  }
-
-  function addPagamentoEdicao() {
-    if (!novoPagamentoValor) {
-      alert("Informe o valor do pagamento.");
-      return;
-    }
-    if (novoPagamentoTipo === "cartao" && (!novoPagamentoCartaoNome || !novoPagamentoVenc)) {
-      alert("Nome do cartão e vencimento obrigatórios para cartão.");
-      return;
-    }
-    setEditGasto(editGasto => editGasto ? {
-      ...editGasto,
-      pagamentos: [
-        ...editGasto.pagamentos,
-        {
-          id: Date.now(),
-          tipo: novoPagamentoTipo,
-          valor: Number(novoPagamentoValor),
-          cartaoNome: novoPagamentoTipo === "cartao" ? novoPagamentoCartaoNome : undefined,
-          vencimentoFatura: novoPagamentoTipo === "cartao" ? novoPagamentoVenc : undefined,
-        }
-      ]
-    } : null);
-    setNovoPagamentoTipo("dinheiro");
-    setNovoPagamentoValor("");
-    setNovoPagamentoCartaoNome("");
-    setNovoPagamentoVenc("");
-  }
-
-  function removePagamentoEdicao(idx: number) {
-    setEditGasto(editGasto => editGasto ? {
-      ...editGasto,
-      pagamentos: editGasto.pagamentos.filter((_, i) => i !== idx)
-    } : null);
-  }
-
-  function salvarEdicao() {
-    if (editGasto) {
-      editarGasto(editGasto);
-      setEditandoId(null);
-      setEditGasto(null);
-    }
   }
 
   return (
@@ -184,8 +135,8 @@ export default function Gastos() {
                 <button
                   className="text-blue-500 text-xs font-semibold underline hover:text-blue-700"
                   onClick={() => {
-                    setDetalheId(g.id);
-                    setEditandoId(null);
+                    // setDetalheId(g.id); // Removido
+                    // setEditandoId(null); // Removido
                   }}
                 >
                   Ver detalhes
