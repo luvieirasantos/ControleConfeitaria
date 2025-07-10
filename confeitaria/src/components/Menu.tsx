@@ -8,6 +8,7 @@ const navs = [
   { label: "Encomendas", to: "/encomendas", icon: <HiOutlineClipboardList size={20} /> },
   { label: "Registrar Gasto", to: "/registrar-gasto", icon: <HiOutlineCurrencyDollar size={20} /> },
   { label: "Resumo", to: "/resumo", icon: <HiOutlineChartBar size={20} /> },
+  { label: "Gastos", to: "/Gastos", icon: <HiOutlineChartBar size={20} /> },
 ];
 
 export default function Menu() {

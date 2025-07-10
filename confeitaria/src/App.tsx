@@ -7,6 +7,7 @@ import NovaEncomenda from "./pages/NovaEncomenda";
 import Encomendas from "./pages/Encomendas";
 import RegistrarGasto from "./pages/RegistrarGasto";
 import Resumo from "./pages/Resumo";
+import Gastos from "./pages/Gastos";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/encomendas" element={<Encomendas />} />
                 <Route path="/registrar-gasto" element={<RegistrarGasto />} />
                 <Route path="/resumo" element={<Resumo />} />
+                <Route path="/gastos" element={<Gastos />} />
               </Routes>
             </div>
           </main>

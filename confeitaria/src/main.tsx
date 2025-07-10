@@ -1,11 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import './index.css'
+import { ProdutosProvider } from './context/ProdutosContext'
+import { EncomendasProvider } from './context/EncomendasContext'
+import { GastosProvider } from './context/GastosContext'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ProdutosProvider>
+      <EncomendasProvider>
+        <GastosProvider>
+          <App />
+        </GastosProvider>
+      </EncomendasProvider>
+    </ProdutosProvider>
+  </React.StrictMode>
 )
