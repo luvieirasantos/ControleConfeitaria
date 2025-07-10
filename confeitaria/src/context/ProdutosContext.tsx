@@ -20,6 +20,8 @@ type ProdutosContextType = {
   produtos: Produto[];
   adicionarProduto: (produto: Produto) => void;
   adicionarSabor: (produtoId: number, sabor: Sabor) => void;
+  editarProduto: (produto: Produto) => void;
+  deletarProduto: (produtoId: number) => void;
 };
 
 const ProdutosContext = createContext<ProdutosContextType | undefined>(undefined);
@@ -52,8 +54,16 @@ export function ProdutosProvider({ children }: { children: ReactNode }) {
     );
   }
 
+  function editarProduto(produto: Produto) {
+    setProdutos((prev) => prev.map(p => p.id === produto.id ? produto : p));
+  }
+
+  function deletarProduto(produtoId: number) {
+    setProdutos((prev) => prev.filter(p => p.id !== produtoId));
+  }
+
   return (
-    <ProdutosContext.Provider value={{ produtos, adicionarProduto, adicionarSabor }}>
+    <ProdutosContext.Provider value={{ produtos, adicionarProduto, adicionarSabor, editarProduto, deletarProduto }}>
       {children}
     </ProdutosContext.Provider>
   );
