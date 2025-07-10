@@ -10,7 +10,6 @@ export default function Resumo() {
   const totalRecebido = validas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
   const totalPendente = totalVendido - totalRecebido;
 
-  const totalEncomendas = validas.length;
   const totalEntregues = validas.filter(e => e.status === "entregue").length;
   const totalFazendo = validas.filter(e => e.status === "fazendo").length;
   const totalCanceladas = encomendas.filter(e => e.status === "cancelada").length;

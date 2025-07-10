@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { HiOutlineClipboardList, HiOutlineCurrencyDollar, HiOutlineChartBar } from "react-icons/hi";
+import { HiOutlineCurrencyDollar, HiOutlineChartBar } from "react-icons/hi";
 import { FaBagShopping, FaRegFloppyDisk, FaRegFolderOpen, FaRegChartBar } from "react-icons/fa6";
 
 export default function Dashboard() {

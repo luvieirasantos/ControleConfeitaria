@@ -40,7 +40,7 @@ export default function Encomendas() {
             </div>
             <div className="mt-2">
               <div className="font-medium mb-1">Produtos:</div>
-              {e.produtos.map((p, idx) => (
+              {e.produtos.map((p) => (
                 <div key={p.id} className="flex flex-wrap items-center gap-2 text-base bg-pink-50 rounded-md px-2 py-1 mb-1">
                   <span>
                     <b>{p.quantidade}x</b> {p.produto}
