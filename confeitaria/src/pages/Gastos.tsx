@@ -9,19 +9,12 @@ function getDateNDaysAgo(days: number) {
 }
 
 export default function Gastos() {
-  const { gastos, editarGasto, deletarGasto } = useGastos();
+  const { gastos, deletarGasto } = useGastos();
 
   // Filtros
   const [periodo, setPeriodo] = useState<"7" | "30" | "personalizado">("7");
   const [dataInicio, setDataInicio] = useState(getDateNDaysAgo(7));
   const [dataFim, setDataFim] = useState(new Date().toISOString().split("T")[0]);
-
-  // Para edição
-  const [editGasto, setEditGasto] = useState<Gasto | null>(null);
-  const [novoPagamentoTipo, setNovoPagamentoTipo] = useState<Pagamento["tipo"]>("dinheiro");
-  const [novoPagamentoValor, setNovoPagamentoValor] = useState("");
-  const [novoPagamentoCartaoNome, setNovoPagamentoCartaoNome] = useState("");
-  const [novoPagamentoVenc, setNovoPagamentoVenc] = useState("");
 
   function filtrarPagamentosPorPeriodo(gastos: Gasto[], inicio: string, fim: string) {
     // Retorna lista de objetos: { gasto, pagamento }
@@ -54,10 +47,6 @@ export default function Gastos() {
     if (confirm("Tem certeza que deseja deletar este gasto?")) {
       deletarGasto(id);
     }
-  }
-
-  function startEdit(gasto: Gasto) {
-    setEditGasto({ ...gasto, pagamentos: [...gasto.pagamentos] });
   }
 
   return (
@@ -143,7 +132,13 @@ export default function Gastos() {
                 </button>
                 <button
                   className="text-orange-500 text-xs font-semibold underline hover:text-orange-700"
-                  onClick={() => startEdit(g)}
+                  onClick={() => {
+                    // setEditGasto({ ...g, pagamentos: [...g.pagamentos] }); // Removido
+                    // setNovoPagamentoTipo("dinheiro"); // Removido
+                    // setNovoPagamentoValor(""); // Removido
+                    // setNovoPagamentoCartaoNome(""); // Removido
+                    // setNovoPagamentoVenc(""); // Removido
+                  }}
                 >
                   Editar
                 </button>
