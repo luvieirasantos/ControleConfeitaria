@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import type { ReactNode } from "react";
 
 export type Pagamento = {
   id: number;
@@ -12,15 +13,17 @@ export type Gasto = {
   id: number;
   valor: number;
   mercado: string;
-  dataCompra: string;
-  proximaCompra: string;
+  dataCompra: string;        // yyyy-mm-dd
+  proximaCompra: string;     // yyyy-mm-dd (estimativa)
   observacao?: string;
-  pagamentos: Pagamento[]; // NOVO!
+  pagamentos: Pagamento[];   // Vários pagamentos possíveis!
 };
 
 type GastosContextType = {
   gastos: Gasto[];
   adicionarGasto: (gasto: Gasto) => void;
+  editarGasto: (gasto: Gasto) => void;
+  deletarGasto: (id: number) => void;
 };
 
 const GastosContext = createContext<GastosContextType | undefined>(undefined);
@@ -41,8 +44,16 @@ export function GastosProvider({ children }: { children: ReactNode }) {
     setGastos((prev) => [gasto, ...prev]);
   }
 
+  function editarGasto(gasto: Gasto) {
+    setGastos((prev) => prev.map(g => g.id === gasto.id ? gasto : g));
+  }
+
+  function deletarGasto(id: number) {
+    setGastos((prev) => prev.filter(g => g.id !== id));
+  }
+
   return (
-    <GastosContext.Provider value={{ gastos, adicionarGasto }}>
+    <GastosContext.Provider value={{ gastos, adicionarGasto, editarGasto, deletarGasto }}>
       {children}
     </GastosContext.Provider>
   );

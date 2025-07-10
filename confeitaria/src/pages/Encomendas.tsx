@@ -32,32 +32,44 @@ export default function Encomendas() {
               <div>
                 <div className="font-semibold text-xl text-pink-700">{e.cliente}</div>
                 <div className="text-xs text-gray-500">{e.data}</div>
+                {e.telefone && <div className="text-xs text-gray-400">Tel: {e.telefone}</div>}
               </div>
               <span className={`rounded-xl px-3 py-1 text-sm font-bold`}>
                 {STATUS_LABEL[e.status]}
               </span>
             </div>
-            <div className="text-gray-800 font-medium">{e.produto}
-              {e.sabor ? ` — ${e.sabor}` : ""}
-              {" "}x{e.quantidade}
+            <div className="mt-2">
+              <div className="font-medium mb-1">Produtos:</div>
+              {e.produtos.map((p, idx) => (
+                <div key={p.id} className="flex flex-wrap items-center gap-2 text-base bg-pink-50 rounded-md px-2 py-1 mb-1">
+                  <span>
+                    <b>{p.quantidade}x</b> {p.produto}
+                    {p.sabor ? ` (${p.sabor})` : ""}
+                    {p.adicionais.length > 0 && ` + ${p.adicionais.join(", ")}`}
+                  </span>
+                  <span className="font-semibold text-pink-700 ml-2">R$ {p.valorTotal.toFixed(2)}</span>
+                </div>
+              ))}
             </div>
-            {e.adicionais.length > 0 && (
-              <div className="text-sm text-gray-600">
-                Adicionais: {e.adicionais.join(", ")}
+            <div className="flex flex-wrap justify-between items-center gap-3 mt-3">
+              <div>
+                <span className="text-gray-800 font-semibold mr-2">Valor total:</span>
+                <span className="font-bold text-pink-600">R$ {e.valorTotal.toFixed(2)}</span>
               </div>
-            )}
-            <div className="text-sm text-gray-600">
-              Valor total: <span className="font-semibold text-gray-800">R$ {e.valorTotal.toFixed(2)}</span>
-              <br />
-              Pago: <span className={e.valorPago > 0 ? "text-green-700 font-semibold" : "text-red-500 font-semibold"}>R$ {e.valorPago.toFixed(2)}</span>
-              <br />
-              <span>Status do pagamento: {PAGAMENTO_LABEL[e.pagamentoStatus]}</span>
+              <div>
+                <span className="text-gray-800 font-semibold mr-2">Pago:</span>
+                <span className={e.valorPago > 0 ? "text-green-700 font-semibold" : "text-red-500 font-semibold"}>R$ {e.valorPago.toFixed(2)}</span>
+              </div>
+              <div>
+                <span className="text-gray-700 font-semibold">Status do pagamento: </span>
+                <span>{PAGAMENTO_LABEL[e.pagamentoStatus]}</span>
+              </div>
             </div>
             {e.observacao && (
-              <div className="text-xs text-gray-500">Obs: {e.observacao}</div>
+              <div className="text-xs text-gray-500 mt-2">Obs: {e.observacao}</div>
             )}
 
-            {/* Botões para editar pagamento */}
+            {/* Botões para editar pagamento e status */}
             <div className="flex gap-2 mt-2">
               <button
                 className="rounded-lg px-3 py-1 bg-blue-100 border border-blue-300 text-blue-800 text-xs font-bold"
@@ -69,7 +81,6 @@ export default function Encomendas() {
               >
                 Atualizar pagamento
               </button>
-              {/* Status da encomenda */}
               <button
                 className="rounded-lg px-3 py-1 bg-yellow-100 border border-yellow-300 text-yellow-800 text-xs font-bold"
                 onClick={() => atualizarStatus(e.id, "fazendo", e.pagamentoStatus, e.valorPago)}

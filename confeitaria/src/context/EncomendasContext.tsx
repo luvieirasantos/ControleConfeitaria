@@ -3,15 +3,22 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 export type EncomendaStatus = "fazendo" | "entregue" | "cancelada";
 export type PagamentoStatus = "nao-pago" | "pago-parcial" | "pago-total";
 
-export type Encomenda = {
+export type ProdutoEncomenda = {
   id: number;
-  cliente: string;
-  telefone?: string;
   produto: string;
   sabor?: string;
   quantidade: number;
   adicionais: string[];
+  valorUnitario: number;
   valorTotal: number;
+};
+
+export type Encomenda = {
+  id: number;
+  cliente: string;
+  telefone?: string;
+  produtos: ProdutoEncomenda[];  // AGORA UM ARRAY
+  valorTotal: number;             // Soma de todos os produtos
   valorPago: number;
   pagamentoStatus: PagamentoStatus;
   observacao?: string;
