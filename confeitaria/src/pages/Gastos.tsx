@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGastos } from "../context/GastosContext";
-import type { Gasto, Pagamento } from "../context/GastosContext";
+import type { Gasto } from "../context/GastosContext";
 
 function getDateNDaysAgo(days: number) {
   const date = new Date();
