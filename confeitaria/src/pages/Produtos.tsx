@@ -117,8 +117,6 @@ export default function Produtos() {
                 {/* Se for personalizável, pode abrir área de sabores */}
                 {p.personalizavel && (
                   <Button
-                    size="sm"
-                    variant="outline"
                     className="text-xs border-pink-400"
                     onClick={() =>
                       setSelectedProdutoId(selectedProdutoId === p.id ? null : p.id)
