@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useGastos } from "../context/GastosContext";
 import type { Gasto, Pagamento } from "../context/GastosContext";
 
@@ -25,24 +25,32 @@ export default function Gastos() {
   const [novoPagamentoCartaoNome, setNovoPagamentoCartaoNome] = useState("");
   const [novoPagamentoVenc, setNovoPagamentoVenc] = useState("");
 
-  function filtrarGastos() {
-    let inicio = dataInicio;
-    let fim = dataFim;
-    if (periodo === "7") {
-      inicio = getDateNDaysAgo(7);
-      fim = new Date().toISOString().split("T")[0];
-    }
-    if (periodo === "30") {
-      inicio = getDateNDaysAgo(30);
-      fim = new Date().toISOString().split("T")[0];
-    }
-    return gastos.filter(g =>
-      g.dataCompra >= inicio && g.dataCompra <= fim
+  function filtrarPagamentosPorPeriodo(gastos: Gasto[], inicio: string, fim: string) {
+    // Retorna lista de objetos: { gasto, pagamento }
+    return gastos.flatMap(g =>
+      g.pagamentos
+        .filter(p => {
+          // Se não houver vencimentoFatura, usa dataCompra
+          const data = p.vencimentoFatura || g.dataCompra;
+          return data >= inicio && data <= fim;
+        })
+        .map(p => ({ gasto: g, pagamento: p }))
     );
   }
 
-  const gastosFiltrados = filtrarGastos();
-  const totalPeriodo = gastosFiltrados.reduce((sum, g) => sum + g.valor, 0);
+  let inicio = dataInicio;
+  let fim = dataFim;
+  if (periodo === "7") {
+    inicio = getDateNDaysAgo(7);
+    fim = new Date().toISOString().split("T")[0];
+  }
+  if (periodo === "30") {
+    inicio = getDateNDaysAgo(30);
+    fim = new Date().toISOString().split("T")[0];
+  }
+
+  const pagamentosFiltrados = filtrarPagamentosPorPeriodo(gastos, inicio, fim);
+  const totalPeriodo = pagamentosFiltrados.reduce((sum, { pagamento }) => sum + pagamento.valor, 0);
 
   function handleDeletar(id: number) {
     if (confirm("Tem certeza que deseja deletar este gasto?")) {
@@ -137,206 +145,64 @@ export default function Gastos() {
         <div className="font-semibold text-gray-700">Total no período selecionado:</div>
         <div className="text-2xl font-bold text-pink-600">R$ {totalPeriodo.toFixed(2)}</div>
       </div>
-      {gastosFiltrados.length === 0 ? (
+      {pagamentosFiltrados.length === 0 ? (
         <div className="text-gray-400 text-center mt-10">Nenhum gasto registrado neste período.</div>
       ) : (
         <div className="grid gap-4">
-          {gastosFiltrados.map(g => (
-            <div key={g.id} className="bg-pink-50 border-l-4 border-pink-400 rounded-xl p-4 shadow-sm relative">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-lg">R$ {g.valor.toFixed(2)}</span>
-                <span className="text-xs text-gray-500">{g.dataCompra}</span>
+          {pagamentosFiltrados.map(({ gasto: g, pagamento: p }, idx) => (
+            <div
+              key={g.id + '-' + (p.id || idx)}
+              className="bg-white border border-gray-200 rounded-2xl shadow-md p-5 flex flex-col md:flex-row md:items-center gap-4 relative hover:shadow-lg transition-shadow"
+            >
+              {/* Ícone do tipo de pagamento */}
+              <div className="flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-pink-100">
+                {p.tipo === 'cartao' && <span className="text-pink-500 text-2xl">💳</span>}
+                {p.tipo === 'dinheiro' && <span className="text-green-500 text-2xl">💵</span>}
+                {p.tipo === 'pix' && <span className="text-blue-500 text-2xl">⚡</span>}
+                {p.tipo === 'boleto' && <span className="text-gray-500 text-2xl">🏷️</span>}
               </div>
-              <div className="text-gray-700">{g.mercado}</div>
-              {g.observacao && <div className="text-xs text-gray-500">Obs: {g.observacao}</div>}
-              {g.proximaCompra && (
-                <div className="text-xs text-blue-600">Próxima compra: {g.proximaCompra}</div>
-              )}
-              <div className="flex gap-2 mt-3">
+              {/* Conteúdo principal */}
+              <div className="flex-1 flex flex-col gap-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-2xl font-bold text-pink-600">R$ {p.valor.toFixed(2)}</span>
+                  {p.tipo === 'cartao' && p.parcela && p.totalParcelas && (
+                    <span className="bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-1 rounded-full ml-2">Parcela {p.parcela} de {p.totalParcelas}</span>
+                  )}
+                </div>
+                <div className="text-lg font-semibold text-gray-800 truncate">{g.mercado}</div>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-xs text-gray-500">Vencimento:</span>
+                  <span className="text-sm font-medium text-gray-700">{p.vencimentoFatura || g.dataCompra}</span>
+                </div>
+                {g.observacao && <div className="text-xs text-gray-400 mt-1">Obs: {g.observacao}</div>}
+                {g.proximaCompra && (
+                  <div className="text-xs text-blue-600 mt-1">Próxima compra: {g.proximaCompra}</div>
+                )}
+              </div>
+              {/* Ações */}
+              <div className="flex flex-col gap-2 items-end md:items-center justify-center">
                 <button
-                  className="text-blue-600 text-xs font-semibold underline"
+                  className="text-blue-500 text-xs font-semibold underline hover:text-blue-700"
                   onClick={() => {
-                    setDetalheId(detalheId === g.id ? null : g.id);
+                    setDetalheId(g.id);
                     setEditandoId(null);
                   }}
                 >
-                  {detalheId === g.id ? "Ocultar detalhes" : "Ver detalhes"}
+                  Ver detalhes
                 </button>
                 <button
-                  className="text-orange-600 text-xs font-semibold underline"
+                  className="text-orange-500 text-xs font-semibold underline hover:text-orange-700"
                   onClick={() => startEdit(g)}
                 >
                   Editar
                 </button>
                 <button
-                  className="text-red-600 text-xs font-semibold underline"
+                  className="text-red-500 text-xs font-semibold underline hover:text-red-700"
                   onClick={() => handleDeletar(g.id)}
                 >
                   Deletar
                 </button>
               </div>
-              {/* Detalhes do gasto */}
-              {detalheId === g.id && (
-                <div className="bg-white border mt-4 rounded-xl p-3 shadow-inner">
-                  <div className="mb-1 font-semibold">Pagamentos deste gasto:</div>
-                  <ul>
-                    {g.pagamentos.map((p, idx) => (
-                      <li key={p.id || idx}>
-                        {p.tipo === "dinheiro" && (
-                          <>Dinheiro — <b>R$ {p.valor.toFixed(2)}</b></>
-                        )}
-                        {p.tipo === "pix" && (
-                          <>PIX — <b>R$ {p.valor.toFixed(2)}</b></>
-                        )}
-                        {p.tipo === "boleto" && (
-                          <>Boleto — <b>R$ {p.valor.toFixed(2)}</b></>
-                        )}
-                        {p.tipo === "cartao" && (
-                          <>
-                            Cartão: <b>{p.cartaoNome}</b> — R$ {p.valor.toFixed(2)}<br />
-                            <span className="text-xs text-gray-500">Vencimento: {p.vencimentoFatura}</span>
-                          </>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="text-sm mt-2">
-                    Total dos pagamentos:{" "}
-                    <b>
-                      R$ {g.pagamentos.reduce((sum, p) => sum + p.valor, 0).toFixed(2)}
-                    </b>
-                  </div>
-                </div>
-              )}
-              {/* Edição do gasto */}
-              {editandoId === g.id && editGasto && (
-                <div className="bg-white border mt-4 rounded-xl p-4 shadow-inner">
-                  <div className="flex flex-col gap-2">
-                    <input
-                      className="border rounded-xl p-2"
-                      value={editGasto.valor}
-                      onChange={e => setEditGasto(eg => eg ? { ...eg, valor: Number(e.target.value) } : null)}
-                      type="number"
-                      placeholder="Valor total da nota"
-                    />
-                    <input
-                      className="border rounded-xl p-2"
-                      value={editGasto.mercado}
-                      onChange={e => setEditGasto(eg => eg ? { ...eg, mercado: e.target.value } : null)}
-                      placeholder="Mercado/Loja"
-                    />
-                    <input
-                      className="border rounded-xl p-2"
-                      value={editGasto.dataCompra}
-                      onChange={e => setEditGasto(eg => eg ? { ...eg, dataCompra: e.target.value } : null)}
-                      type="date"
-                    />
-                    <input
-                      className="border rounded-xl p-2"
-                      value={editGasto.proximaCompra}
-                      onChange={e => setEditGasto(eg => eg ? { ...eg, proximaCompra: e.target.value } : null)}
-                      type="date"
-                    />
-                    <textarea
-                      className="border rounded-xl p-2"
-                      value={editGasto.observacao}
-                      onChange={e => setEditGasto(eg => eg ? { ...eg, observacao: e.target.value } : null)}
-                      placeholder="Observações"
-                    />
-
-                    {/* Pagamentos (listagem e edição) */}
-                    <div className="border-t pt-3 mt-2">
-                      <div className="font-semibold mb-2">Pagamentos:</div>
-                      <ul>
-                        {editGasto.pagamentos.map((p, idx) => (
-                          <li key={p.id || idx} className="mb-1 flex items-center gap-2">
-                            {p.tipo === "dinheiro" && (
-                              <>Dinheiro — <b>R$ {p.valor.toFixed(2)}</b></>
-                            )}
-                            {p.tipo === "pix" && (
-                              <>PIX — <b>R$ {p.valor.toFixed(2)}</b></>
-                            )}
-                            {p.tipo === "boleto" && (
-                              <>Boleto — <b>R$ {p.valor.toFixed(2)}</b></>
-                            )}
-                            {p.tipo === "cartao" && (
-                              <>
-                                Cartão: <b>{p.cartaoNome}</b> — R$ {p.valor.toFixed(2)}
-                                <span className="text-xs text-gray-500 ml-2">Venc: {p.vencimentoFatura}</span>
-                              </>
-                            )}
-                            <button
-                              className="text-red-400 ml-2"
-                              onClick={() => removePagamentoEdicao(idx)}
-                            >Remover</button>
-                          </li>
-                        ))}
-                      </ul>
-                      {/* Novo pagamento */}
-                      <div className="flex flex-wrap gap-2 items-end mt-2">
-                        <select
-                          className="border rounded-xl p-2"
-                          value={novoPagamentoTipo}
-                          onChange={e => setNovoPagamentoTipo(e.target.value as any)}
-                        >
-                          <option value="dinheiro">Dinheiro</option>
-                          <option value="cartao">Cartão de Crédito</option>
-                          <option value="pix">PIX</option>
-                          <option value="boleto">Boleto</option>
-                        </select>
-                        <input
-                          className="border rounded-xl p-2"
-                          type="number"
-                          min="0"
-                          placeholder="Valor (R$)"
-                          value={novoPagamentoValor}
-                          onChange={e => setNovoPagamentoValor(e.target.value)}
-                          style={{ width: 110 }}
-                        />
-                        {novoPagamentoTipo === "cartao" && (
-                          <>
-                            <input
-                              className="border rounded-xl p-2"
-                              placeholder="Nome do cartão"
-                              value={novoPagamentoCartaoNome}
-                              onChange={e => setNovoPagamentoCartaoNome(e.target.value)}
-                              style={{ width: 120 }}
-                            />
-                            <input
-                              className="border rounded-xl p-2"
-                              type="date"
-                              value={novoPagamentoVenc}
-                              onChange={e => setNovoPagamentoVenc(e.target.value)}
-                              style={{ width: 150 }}
-                            />
-                          </>
-                        )}
-                        <button
-                          className="bg-blue-500 text-white rounded px-4 py-2"
-                          type="button"
-                          onClick={addPagamentoEdicao}
-                        >
-                          Adicionar Pagamento
-                        </button>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 mt-4">
-                      <button
-                        className="bg-green-500 text-white rounded px-4 py-2"
-                        onClick={salvarEdicao}
-                      >
-                        Salvar
-                      </button>
-                      <button
-                        className="bg-gray-300 rounded px-4 py-2"
-                        onClick={() => { setEditandoId(null); setEditGasto(null); }}
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>

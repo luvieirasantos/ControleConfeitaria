@@ -7,6 +7,8 @@ export type Pagamento = {
   valor: number;
   cartaoNome?: string;
   vencimentoFatura?: string;
+  parcela?: number; // número da parcela, se for parcelado
+  totalParcelas?: number; // total de parcelas, se for parcelado
 };
 
 export type Gasto = {
