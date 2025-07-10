@@ -14,7 +14,7 @@ export default function Produtos() {
   // para cadastro de sabor
   const [saborNome, setSaborNome] = useState("");
   const [saborPreco, setSaborPreco] = useState("");
-  const [selectedProdutoId, setSelectedProdutoId] = useState<number | null>(null);
+  const [selectedProdutoId] = useState<number | null>(null);
   const [editandoId, setEditandoId] = useState<number | null>(null);
   const [editProduto, setEditProduto] = useState<any>(null);
 
