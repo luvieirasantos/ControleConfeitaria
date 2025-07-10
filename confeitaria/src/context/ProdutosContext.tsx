@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { supabase } from '../lib/supabaseClient';
 
 // Tipos
 export type Sabor = {
@@ -18,10 +19,10 @@ export type Produto = {
 
 type ProdutosContextType = {
   produtos: Produto[];
-  adicionarProduto: (produto: Produto) => void;
-  adicionarSabor: (produtoId: number, sabor: Sabor) => void;
-  editarProduto: (produto: Produto) => void;
-  deletarProduto: (produtoId: number) => void;
+  adicionarProduto: (produto: Produto) => Promise<void>;
+  adicionarSabor: (produtoId: number, sabor: Sabor) => Promise<void>;
+  editarProduto: (produto: Produto) => Promise<void>;
+  deletarProduto: (produtoId: number) => Promise<void>;
 };
 
 const ProdutosContext = createContext<ProdutosContextType | undefined>(undefined);
@@ -29,37 +30,104 @@ const ProdutosContext = createContext<ProdutosContextType | undefined>(undefined
 export function ProdutosProvider({ children }: { children: ReactNode }) {
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
-  // Carrega do localStorage ao iniciar
+  // Buscar produtos e sabores do Supabase ao carregar
   useEffect(() => {
-    const data = localStorage.getItem("produtos");
-    if (data) setProdutos(JSON.parse(data));
+    async function fetchProdutos() {
+      const { data: produtosData, error: produtosError } = await supabase
+        .from('produtos')
+        .select('*')
+        .order('id', { ascending: true });
+      if (produtosError) return;
+      const { data: saboresData } = await supabase
+        .from('sabores')
+        .select('*');
+      // Relacionar sabores aos produtos
+      const produtosComSabores = (produtosData || []).map(prod => ({
+        ...prod,
+        sabores: (saboresData || []).filter(s => s.produto_id === prod.id)
+      }));
+      setProdutos(produtosComSabores);
+    }
+    fetchProdutos();
   }, []);
 
-  // Salva no localStorage sempre que mudar
-  useEffect(() => {
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-  }, [produtos]);
-
-  function adicionarProduto(produto: Produto) {
-    setProdutos((prev) => [...prev, produto]);
+  // Adicionar produto e seus sabores
+  async function adicionarProduto(produto: Produto) {
+    // Inserir produto
+    const { data: insertedProduto, error: produtoError } = await supabase
+      .from('produtos')
+      .insert([{
+        nome: produto.nome,
+        tipo: produto.tipo,
+        personalizavel: produto.personalizavel
+      }])
+      .select()
+      .single();
+    if (produtoError || !insertedProduto) return;
+    // Inserir sabores
+    const saboresToInsert = produto.sabores.map(s => ({
+      produto_id: insertedProduto.id,
+      nome: s.nome,
+      preco: s.preco
+    }));
+    const { data: insertedSabores } = await supabase
+      .from('sabores')
+      .insert(saboresToInsert)
+      .select();
+    setProdutos(prev => [
+      ...prev,
+      {
+        ...insertedProduto,
+        sabores: insertedSabores || []
+      }
+    ]);
   }
 
-  function adicionarSabor(produtoId: number, sabor: Sabor) {
-    setProdutos((prev) =>
-      prev.map((p) =>
-        p.id === produtoId
-          ? { ...p, sabores: [...p.sabores, sabor] }
-          : p
-      )
-    );
+  // Adicionar sabor a um produto
+  async function adicionarSabor(produtoId: number, sabor: Sabor) {
+    const { data: insertedSabor, error } = await supabase
+      .from('sabores')
+      .insert([{ produto_id: produtoId, nome: sabor.nome, preco: sabor.preco }])
+      .select()
+      .single();
+    if (error || !insertedSabor) return;
+    setProdutos(prev => prev.map(p =>
+      p.id === produtoId ? { ...p, sabores: [...p.sabores, insertedSabor] } : p
+    ));
   }
 
-  function editarProduto(produto: Produto) {
-    setProdutos((prev) => prev.map(p => p.id === produto.id ? produto : p));
+  // Editar produto e seus sabores
+  async function editarProduto(produto: Produto) {
+    await supabase
+      .from('produtos')
+      .update({
+        nome: produto.nome,
+        tipo: produto.tipo,
+        personalizavel: produto.personalizavel
+      })
+      .eq('id', produto.id);
+    // Deletar sabores antigos
+    await supabase.from('sabores').delete().eq('produto_id', produto.id);
+    // Inserir novos sabores
+    const saboresToInsert = produto.sabores.map(s => ({
+      produto_id: produto.id,
+      nome: s.nome,
+      preco: s.preco
+    }));
+    const { data: insertedSabores } = await supabase
+      .from('sabores')
+      .insert(saboresToInsert)
+      .select();
+    setProdutos(prev => prev.map(p =>
+      p.id === produto.id ? { ...produto, sabores: insertedSabores || [] } : p
+    ));
   }
 
-  function deletarProduto(produtoId: number) {
-    setProdutos((prev) => prev.filter(p => p.id !== produtoId));
+  // Deletar produto e seus sabores
+  async function deletarProduto(produtoId: number) {
+    await supabase.from('sabores').delete().eq('produto_id', produtoId);
+    await supabase.from('produtos').delete().eq('id', produtoId);
+    setProdutos(prev => prev.filter(p => p.id !== produtoId));
   }
 
   return (

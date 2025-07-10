@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { supabase } from '../lib/supabaseClient';
 
 export type Pagamento = {
   id: number;
@@ -23,9 +24,9 @@ export type Gasto = {
 
 type GastosContextType = {
   gastos: Gasto[];
-  adicionarGasto: (gasto: Gasto) => void;
-  editarGasto: (gasto: Gasto) => void;
-  deletarGasto: (id: number) => void;
+  adicionarGasto: (gasto: Gasto) => Promise<void>;
+  editarGasto: (gasto: Gasto) => Promise<void>;
+  deletarGasto: (id: number) => Promise<void>;
 };
 
 const GastosContext = createContext<GastosContextType | undefined>(undefined);
@@ -33,25 +34,98 @@ const GastosContext = createContext<GastosContextType | undefined>(undefined);
 export function GastosProvider({ children }: { children: ReactNode }) {
   const [gastos, setGastos] = useState<Gasto[]>([]);
 
+  // Buscar gastos e pagamentos do Supabase ao carregar
   useEffect(() => {
-    const data = localStorage.getItem("gastos");
-    if (data) setGastos(JSON.parse(data));
+    async function fetchGastos() {
+      const { data: gastosData, error: gastosError } = await supabase
+        .from('gastos')
+        .select('*')
+        .order('id', { ascending: false });
+      if (gastosError) return;
+      const { data: pagamentosData } = await supabase
+        .from('pagamentos')
+        .select('*');
+      // Relacionar pagamentos aos gastos
+      const gastosComPagamentos = (gastosData || []).map(g => ({
+        ...g,
+        pagamentos: (pagamentosData || []).filter(p => p.gasto_id === g.id)
+      }));
+      setGastos(gastosComPagamentos);
+    }
+    fetchGastos();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("gastos", JSON.stringify(gastos));
-  }, [gastos]);
-
-  function adicionarGasto(gasto: Gasto) {
-    setGastos((prev) => [gasto, ...prev]);
+  // Adicionar gasto e pagamentos no Supabase
+  async function adicionarGasto(gasto: Gasto) {
+    // Inserir gasto
+    const { data: insertedGasto, error: gastoError } = await supabase
+      .from('gastos')
+      .insert([{
+        valor: gasto.valor,
+        mercado: gasto.mercado,
+        data_compra: gasto.dataCompra,
+        proxima_compra: gasto.proximaCompra,
+        observacao: gasto.observacao
+      }])
+      .select()
+      .single();
+    if (gastoError || !insertedGasto) return;
+    // Inserir pagamentos
+    const pagamentosToInsert = gasto.pagamentos.map(p => ({
+      gasto_id: insertedGasto.id,
+      tipo: p.tipo,
+      valor: p.valor,
+      cartao_nome: p.cartaoNome,
+      vencimento_fatura: p.vencimentoFatura,
+      parcela: p.parcela,
+      total_parcelas: p.totalParcelas
+    }));
+    const { data: insertedPagamentos } = await supabase
+      .from('pagamentos')
+      .insert(pagamentosToInsert)
+      .select();
+    setGastos(prev => [{
+      ...insertedGasto,
+      dataCompra: insertedGasto.data_compra,
+      proximaCompra: insertedGasto.proxima_compra,
+      pagamentos: insertedPagamentos || []
+    }, ...prev]);
   }
 
-  function editarGasto(gasto: Gasto) {
-    setGastos((prev) => prev.map(g => g.id === gasto.id ? gasto : g));
+  // Editar gasto e pagamentos
+  async function editarGasto(gasto: Gasto) {
+    await supabase
+      .from('gastos')
+      .update({
+        valor: gasto.valor,
+        mercado: gasto.mercado,
+        data_compra: gasto.dataCompra,
+        proxima_compra: gasto.proximaCompra,
+        observacao: gasto.observacao
+      })
+      .eq('id', gasto.id);
+    // Deletar pagamentos antigos
+    await supabase.from('pagamentos').delete().eq('gasto_id', gasto.id);
+    // Inserir novos pagamentos
+    const pagamentosToInsert = gasto.pagamentos.map(p => ({
+      gasto_id: gasto.id,
+      tipo: p.tipo,
+      valor: p.valor,
+      cartao_nome: p.cartaoNome,
+      vencimento_fatura: p.vencimentoFatura,
+      parcela: p.parcela,
+      total_parcelas: p.totalParcelas
+    }));
+    await supabase.from('pagamentos').insert(pagamentosToInsert);
+    // Atualizar local
+    setGastos(prev => prev.map(g => g.id === gasto.id ? gasto : g));
   }
 
-  function deletarGasto(id: number) {
-    setGastos((prev) => prev.filter(g => g.id !== id));
+  // Deletar gasto e pagamentos
+  async function deletarGasto(id: number) {
+    await supabase.from('pagamentos').delete().eq('gasto_id', id);
+    await supabase.from('gastos').delete().eq('id', id);
+    setGastos(prev => prev.filter(g => g.id !== id));
   }
 
   return (
