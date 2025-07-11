@@ -44,7 +44,7 @@ export default function RegistrarGasto() {
       const diaVirada = typeof pagDiaVirada === 'number' ? pagDiaVirada : 1;
       let mesPrimeiraParcela = dataCompraDate.getMonth();
       let anoPrimeiraParcela = dataCompraDate.getFullYear();
-      if (dataCompraDate.getDate() > diaVirada) {
+      if (dataCompraDate.getDate() >= diaVirada) {
         mesPrimeiraParcela++;
         if (mesPrimeiraParcela > 11) {
           mesPrimeiraParcela = 0;
@@ -80,7 +80,7 @@ export default function RegistrarGasto() {
       const diaVirada = typeof pagDiaVirada === 'number' ? pagDiaVirada : 1;
       let mesParcela = dataCompraDate.getMonth();
       let anoParcela = dataCompraDate.getFullYear();
-      if (dataCompraDate.getDate() > diaVirada) {
+      if (dataCompraDate.getDate() >= diaVirada) {
         mesParcela++;
         if (mesParcela > 11) {
           mesParcela = 0;
