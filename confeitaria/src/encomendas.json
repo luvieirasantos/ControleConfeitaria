@@ -1,0 +1,1278 @@
+[
+    {
+        "id": 1752187149147,
+        "cliente": "Regiane",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752187146805,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752187136618,
+        "cliente": "Andressa",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752187115445,
+                "produto": "Ninho com morango",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 75,
+                "valorTotal": 165
+            },
+            {
+                "id": 1752187126215,
+                "produto": "100 docinhos",
+                "quantidade": 0.5,
+                "adicionais": [],
+                "valorUnitario": 120,
+                "valorTotal": 65
+            }
+        ],
+        "valorTotal": 230,
+        "valorPago": 230,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752187065506,
+        "cliente": "Jennifer",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752187064494,
+                "produto": "Mousse de chocolate",
+                "quantidade": 2.5,
+                "adicionais": [],
+                "valorUnitario": 70,
+                "valorTotal": 187
+            }
+        ],
+        "valorTotal": 187,
+        "valorPago": 187,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752187031779,
+        "cliente": "Vanessa",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752187031486,
+                "produto": "Bolo Chocolate",
+                "quantidade": 3,
+                "adicionais": [],
+                "valorUnitario": 70,
+                "valorTotal": 225
+            }
+        ],
+        "valorTotal": 225,
+        "valorPago": 225,
+        "pagamentoStatus": "pago-total",
+        "observacao": "Topo",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752187001362,
+        "cliente": "Lucia",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752187000919,
+                "produto": "Abacaxi",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 75,
+                "valorTotal": 165
+            }
+        ],
+        "valorTotal": 165,
+        "valorPago": 165,
+        "pagamentoStatus": "pago-total",
+        "observacao": "Topo",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186941755,
+        "cliente": "Lorena",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186939734,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186922467,
+        "cliente": "Patricia",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186919939,
+                "produto": "Mousse de chocolate",
+                "quantidade": 1.5,
+                "adicionais": [],
+                "valorUnitario": 70,
+                "valorTotal": 120
+            }
+        ],
+        "valorTotal": 120,
+        "valorPago": 120,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186895771,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186894707,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186887795,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186886152,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186877771,
+        "cliente": "Maiara",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186875333,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186858075,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186857639,
+                "produto": "Bolo Chocolate",
+                "quantidade": 1.5,
+                "adicionais": [],
+                "valorUnitario": 70,
+                "valorTotal": 120
+            }
+        ],
+        "valorTotal": 120,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "Topo",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186839339,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186838649,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186830899,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186829188,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186821155,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186820037,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186811012,
+        "cliente": "Lina",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186810760,
+                "produto": "Ninho com morango",
+                "quantidade": 1.5,
+                "adicionais": [],
+                "valorUnitario": 75,
+                "valorTotal": 127
+            }
+        ],
+        "valorTotal": 127,
+        "valorPago": 127,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186772803,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186771136,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186761699,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186760492,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186753147,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186753159,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186741635,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186740417,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186732227,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186732162,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186701130,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186696966,
+                "produto": "Mousse de chocolate",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 70,
+                "valorTotal": 155
+            }
+        ],
+        "valorTotal": 155,
+        "valorPago": 155,
+        "pagamentoStatus": "pago-total",
+        "observacao": "Topo",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186658546,
+        "cliente": "Dani",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186657185,
+                "produto": "Bolo Chocolate",
+                "quantidade": 1.5,
+                "adicionais": [],
+                "valorUnitario": 70,
+                "valorTotal": 120
+            }
+        ],
+        "valorTotal": 120,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "Topo de bolo",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186607835,
+        "cliente": "Synd",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186599134,
+                "produto": "Prestigio",
+                "quantidade": 3,
+                "adicionais": [],
+                "valorUnitario": 75,
+                "valorTotal": 225
+            },
+            {
+                "id": 1752186603809,
+                "produto": "100 docinhos",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 120,
+                "valorTotal": 120
+            }
+        ],
+        "valorTotal": 345,
+        "valorPago": 345,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186484899,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186484074,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186476915,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186475307,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186467771,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186467351,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186457244,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186454285,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186446875,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186445907,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186437731,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186432231,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186423579,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186422069,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186414771,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186413093,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186406451,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186406285,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186392076,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186382200,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186365859,
+        "cliente": "Verusca",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186362956,
+                "produto": "Bolo de morango",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 75,
+                "valorTotal": 163
+            }
+        ],
+        "valorTotal": 163,
+        "valorPago": 163,
+        "pagamentoStatus": "pago-total",
+        "observacao": "Com topo",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186326883,
+        "cliente": "Rose",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186324752,
+                "produto": "Bolo de morango",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 75,
+                "valorTotal": 150
+            }
+        ],
+        "valorTotal": 150,
+        "valorPago": 150,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186279595,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186277677,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186269612,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186265204,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186252756,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186249506,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186242388,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186239842,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186214651,
+        "cliente": "Mari",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186212101,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 4,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 100
+            }
+        ],
+        "valorTotal": 100,
+        "valorPago": 100,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186197243,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186195999,
+                "produto": "Fubá",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 20,
+                "valorTotal": 20
+            }
+        ],
+        "valorTotal": 20,
+        "valorPago": 20,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186187003,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186185357,
+                "produto": "Fubá",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 20,
+                "valorTotal": 20
+            }
+        ],
+        "valorTotal": 20,
+        "valorPago": 20,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186142211,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186141151,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186126243,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186123275,
+                "produto": "Vulcão simples",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 35,
+                "valorTotal": 35
+            }
+        ],
+        "valorTotal": 35,
+        "valorPago": 35,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186098331,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186097219,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186088235,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186088139,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186080868,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186079775,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186072308,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186071380,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186058364,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186057309,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186038444,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186035525,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186029972,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186027888,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 25,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752186015172,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752186008768,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185988868,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185985563,
+                "produto": "Bolo no pote",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 10,
+                "valorTotal": 20
+            }
+        ],
+        "valorTotal": 20,
+        "valorPago": 20,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185905020,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185902137,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185891140,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185889883,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185879516,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185877961,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 25
+            }
+        ],
+        "valorTotal": 25,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185854828,
+        "cliente": "Mari",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185851259,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 5,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 125
+            }
+        ],
+        "valorTotal": 125,
+        "valorPago": 0,
+        "pagamentoStatus": "nao-pago",
+        "observacao": "",
+        "status": "fazendo",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185575317,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185573448,
+                "produto": "Caseirinho tipo 1",
+                "quantidade": 2,
+                "adicionais": [],
+                "valorUnitario": 25,
+                "valorTotal": 50
+            }
+        ],
+        "valorTotal": 50,
+        "valorPago": 50,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "entregue",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185478118,
+        "cliente": "Clinte",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185476889,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "cancelada",
+        "data": "2025-07-10"
+    },
+    {
+        "id": 1752185429886,
+        "cliente": "Cliente",
+        "telefone": "",
+        "produtos": [
+            {
+                "id": 1752185423210,
+                "produto": "Caseirinho recheado",
+                "quantidade": 1,
+                "adicionais": [],
+                "valorUnitario": 55,
+                "valorTotal": 55
+            }
+        ],
+        "valorTotal": 55,
+        "valorPago": 55,
+        "pagamentoStatus": "pago-total",
+        "observacao": "",
+        "status": "entregue",
+        "data": "2025-07-10"
+    }
+]
