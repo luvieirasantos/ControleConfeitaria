@@ -6,7 +6,11 @@ export default function Resumo() {
   // Só considera encomendas não canceladas
   const validas = encomendas.filter(e => e.status !== "cancelada");
 
-  const totalVendido = validas.reduce((sum, e) => sum + e.valorTotal, 0);
+  // Soma correta: soma o valorTotal de todos os produtos de todas as encomendas válidas
+  const totalVendido = validas.reduce(
+    (sum, e) => sum + (e.produtos?.reduce((s, p) => s + (p.valorTotal || 0), 0) || 0),
+    0
+  );
   const totalRecebido = validas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
   const totalPendente = totalVendido - totalRecebido;
 
