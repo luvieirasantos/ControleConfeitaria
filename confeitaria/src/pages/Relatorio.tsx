@@ -93,7 +93,10 @@ export default function Relatorio() {
     doc.setFontSize(10);
     doc.text(`Período: ${dataInicio || "início"} a ${dataFim || "hoje"}`, 14, 23);
     // Total gasto no cabeçalho
-    const totalGasto = filtrados.reduce((sum, g) => sum + (g.valor || 0), 0);
+    const totalGasto = filtrados.reduce(
+      (sum, g) => sum + g.pagamentos.reduce((s, p) => s + (p.valor || 0), 0),
+      0
+    );
     doc.setFontSize(12);
     doc.text(`Total gasto: ${formatCurrency(totalGasto)}`, 14, 30);
     autoTable(doc, {
