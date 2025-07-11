@@ -22,7 +22,6 @@ export default function RegistrarGasto() {
   const [pagTipo, setPagTipo] = useState<"dinheiro" | "cartao" | "pix" | "boleto">("dinheiro");
   const [pagValor, setPagValor] = useState("");
   const [pagCartaoNome, setPagCartaoNome] = useState("");
-  const [pagVencimento, setPagVencimento] = useState("");
   const [pagDiaVirada, setPagDiaVirada] = useState<number | "">("");
 
   // Adição dos estados para parcelamento
@@ -112,7 +111,6 @@ export default function RegistrarGasto() {
     setPagTipo("dinheiro");
     setPagValor("");
     setPagCartaoNome("");
-    setPagVencimento("");
     setPagDiaVirada("");
     setParcelado(false);
     setQtdParcelas(2);
