@@ -66,8 +66,8 @@ export default function Relatorio() {
     const totalVendido = filtradas.reduce((sum, e) => sum + (e.produtos?.reduce((s, p) => s + (p.valorTotal || 0), 0) || 0), 0);
     const totalRecebido = filtradas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
     doc.setFontSize(12);
-    doc.text(`Total vendido: ${formatCurrency(totalVendido)}`, 14, doc.lastAutoTable.finalY + 10);
-    doc.text(`Total recebido: ${formatCurrency(totalRecebido)}`, 14, doc.lastAutoTable.finalY + 17);
+    doc.text(`Total vendido: ${formatCurrency(totalVendido)}`, 14, (doc as any).lastAutoTable.finalY + 10);
+    doc.text(`Total recebido: ${formatCurrency(totalRecebido)}`, 14, (doc as any).lastAutoTable.finalY + 17);
     doc.save("relatorio_encomendas.pdf");
   }
 
@@ -108,7 +108,7 @@ export default function Relatorio() {
     // Total gasto
     const totalGasto = filtrados.reduce((sum, g) => sum + (g.valor || 0), 0);
     doc.setFontSize(12);
-    doc.text(`Total gasto: ${formatCurrency(totalGasto)}`, 14, doc.lastAutoTable.finalY + 10);
+    doc.text(`Total gasto: ${formatCurrency(totalGasto)}`, 14, (doc as any).lastAutoTable.finalY + 10);
     doc.save("relatorio_gastos.pdf");
   }
 
