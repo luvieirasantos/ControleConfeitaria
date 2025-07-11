@@ -1,21 +1,13 @@
 import { useEncomendas } from "../context/EncomendasContext";
 import { useGastos } from "../context/GastosContext";
 import { useState } from "react";
+// @ts-ignore
+import jsPDF from "jspdf";
+// @ts-ignore
+import autoTable from "jspdf-autotable";
 
-function toCSV(rows: string[][]): string {
-  return rows.map(row => row.map(String).map(field => `"${field.replace(/"/g, '""')}"`).join(",")).join("\r\n");
-}
-
-function downloadCSV(filename: string, content: string) {
-  const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+function formatCurrency(valor: number) {
+  return `R$ ${valor.toFixed(2)}`;
 }
 
 export default function Relatorio() {
@@ -34,11 +26,17 @@ export default function Relatorio() {
     return true;
   }
 
-  // Exporta entradas (encomendas)
-  function exportarEncomendas() {
+  // Exporta entradas (encomendas) em PDF
+  function exportarEncomendasPDF() {
     const filtradas = encomendas.filter(e => inPeriodo(e.data));
-    const rows: string[][] = [
-      [
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Relatório de ENTRADAS (Encomendas)", 14, 16);
+    doc.setFontSize(10);
+    doc.text(`Período: ${dataInicio || "início"} a ${dataFim || "hoje"}`, 14, 23);
+    autoTable(doc, {
+      startY: 28,
+      head: [[
         "Data",
         "Cliente",
         "Produtos",
@@ -47,50 +45,71 @@ export default function Relatorio() {
         "Status Pagamento",
         "Status Encomenda",
         "Observação"
-      ],
-      ...filtradas.map(e => [
+      ]],
+      body: filtradas.map(e => [
         e.data,
         e.cliente,
         e.produtos.map(p =>
-          `${p.quantidade}x ${p.produto}${p.sabor ? ` (${p.sabor})` : ""}${p.adicionais.length > 0 ? ` + ${p.adicionais.join(", ")}` : ""} = R$${p.valorTotal.toFixed(2)}`
+          `${p.quantidade}x ${p.produto}${p.sabor ? ` (${p.sabor})` : ""}${p.adicionais.length > 0 ? ` + ${p.adicionais.join(", ")}` : ""} = ${formatCurrency(p.valorTotal)}`
         ).join(" | "),
-        e.valorTotal.toFixed(2),
-        e.valorPago.toFixed(2),
+        formatCurrency(e.valorTotal),
+        formatCurrency(e.valorPago),
         e.pagamentoStatus,
         e.status,
         e.observacao || ""
-      ])
-    ];
-    downloadCSV("encomendas.csv", toCSV(rows));
+      ]),
+      styles: { fontSize: 9 },
+      headStyles: { fillColor: [236, 72, 153] },
+      theme: 'striped',
+    });
+    // Totais
+    const totalVendido = filtradas.reduce((sum, e) => sum + (e.produtos?.reduce((s, p) => s + (p.valorTotal || 0), 0) || 0), 0);
+    const totalRecebido = filtradas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
+    doc.setFontSize(12);
+    doc.text(`Total vendido: ${formatCurrency(totalVendido)}`, 14, doc.lastAutoTable.finalY + 10);
+    doc.text(`Total recebido: ${formatCurrency(totalRecebido)}`, 14, doc.lastAutoTable.finalY + 17);
+    doc.save("relatorio_encomendas.pdf");
   }
 
-  // Exporta saídas (gastos)
-  function exportarGastos() {
+  // Exporta saídas (gastos) em PDF
+  function exportarGastosPDF() {
     const filtrados = gastos.filter(g => inPeriodo(g.dataCompra));
-    const rows: string[][] = [
-      [
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Relatório de SAÍDAS (Gastos)", 14, 16);
+    doc.setFontSize(10);
+    doc.text(`Período: ${dataInicio || "início"} a ${dataFim || "hoje"}`, 14, 23);
+    autoTable(doc, {
+      startY: 28,
+      head: [[
         "Data da Compra",
         "Mercado/Loja",
         "Valor Total",
-        "Próxima Compra (estimativa)",
+        "Forma de Pagamento",
         "Pagamentos",
         "Observação"
-      ],
-      ...filtrados.map(g => [
+      ]],
+      body: filtrados.map(g => [
         g.dataCompra,
         g.mercado,
-        g.valor.toFixed(2),
-        g.proximaCompra,
+        formatCurrency(g.valor),
         g.pagamentos.map(p => {
           let det = p.tipo.charAt(0).toUpperCase() + p.tipo.slice(1);
           if (p.tipo === "cartao") det += ` (${p.cartaoNome || ""} / Venc: ${p.vencimentoFatura || ""})`;
-          det += `: R$${p.valor.toFixed(2)}`;
           return det;
         }).join(" | "),
+        g.pagamentos.map(p => `R$${p.valor.toFixed(2)}`).join(" | "),
         g.observacao || ""
-      ])
-    ];
-    downloadCSV("gastos.csv", toCSV(rows));
+      ]),
+      styles: { fontSize: 9 },
+      headStyles: { fillColor: [59, 130, 246] },
+      theme: 'striped',
+    });
+    // Total gasto
+    const totalGasto = filtrados.reduce((sum, g) => sum + (g.valor || 0), 0);
+    doc.setFontSize(12);
+    doc.text(`Total gasto: ${formatCurrency(totalGasto)}`, 14, doc.lastAutoTable.finalY + 10);
+    doc.save("relatorio_gastos.pdf");
   }
 
   return (
@@ -120,19 +139,20 @@ export default function Relatorio() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             className="bg-pink-500 text-white rounded-xl px-6 py-3 font-semibold shadow-lg hover:bg-pink-600 transition"
-            onClick={exportarEncomendas}
+            onClick={exportarEncomendasPDF}
           >
-            Exportar ENTRADAS (Encomendas)
+            Exportar ENTRADAS (Encomendas) PDF
           </button>
           <button
             className="bg-blue-500 text-white rounded-xl px-6 py-3 font-semibold shadow-lg hover:bg-blue-600 transition"
-            onClick={exportarGastos}
+            onClick={exportarGastosPDF}
           >
-            Exportar SAÍDAS (Gastos)
+            Exportar SAÍDAS (Gastos) PDF
           </button>
         </div>
         <div className="text-xs text-gray-400 text-center mt-4">
-          Os arquivos são gerados no formato CSV, pronto para abrir no Excel ou Google Planilhas.
+          Os arquivos são gerados no formato PDF, prontos para impressão ou envio digital.<br/>
+          Relatórios incluem todos os detalhes das entradas e saídas do período selecionado.
         </div>
       </div>
     </div>
