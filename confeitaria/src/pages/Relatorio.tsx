@@ -28,14 +28,21 @@ export default function Relatorio() {
 
   // Exporta entradas (encomendas) em PDF
   function exportarEncomendasPDF() {
-    const filtradas = encomendas.filter(e => inPeriodo(e.data));
+    // Só considera encomendas não canceladas
+    const filtradas = encomendas.filter(e => e.status !== "cancelada" && inPeriodo(e.data));
     const doc = new jsPDF();
     doc.setFontSize(16);
     doc.text("Relatório de ENTRADAS (Encomendas)", 14, 16);
     doc.setFontSize(10);
     doc.text(`Período: ${dataInicio || "início"} a ${dataFim || "hoje"}`, 14, 23);
+    // Totais no cabeçalho
+    const totalVendido = filtradas.reduce((sum, e) => sum + (e.produtos?.reduce((s, p) => s + (p.valorTotal || 0), 0) || 0), 0);
+    const totalRecebido = filtradas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
+    doc.setFontSize(12);
+    doc.text(`Total vendido: ${formatCurrency(totalVendido)}`, 14, 30);
+    doc.text(`Total recebido: ${formatCurrency(totalRecebido)}`, 14, 37);
     autoTable(doc, {
-      startY: 28,
+      startY: 43,
       head: [[
         "Data",
         "Cliente",
@@ -62,25 +69,35 @@ export default function Relatorio() {
       headStyles: { fillColor: [236, 72, 153] },
       theme: 'striped',
     });
-    // Totais
-    const totalVendido = filtradas.reduce((sum, e) => sum + (e.produtos?.reduce((s, p) => s + (p.valorTotal || 0), 0) || 0), 0);
-    const totalRecebido = filtradas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
-    doc.setFontSize(12);
-    doc.text(`Total vendido: ${formatCurrency(totalVendido)}`, 14, (doc as any).lastAutoTable.finalY + 10);
-    doc.text(`Total recebido: ${formatCurrency(totalRecebido)}`, 14, (doc as any).lastAutoTable.finalY + 17);
     doc.save("relatorio_encomendas.pdf");
   }
 
   // Exporta saídas (gastos) em PDF
   function exportarGastosPDF() {
-    const filtrados = gastos.filter(g => inPeriodo(g.dataCompra));
+    // Filtra pagamentos do período
+    const filtrados = gastos
+      .map(g => {
+        // Filtra pagamentos (parcelas) do gasto pelo vencimentoFatura
+        const pagamentosFiltrados = g.pagamentos.filter(p => {
+          // Se não houver vencimentoFatura, usa dataCompra
+          const dataParcela = p.vencimentoFatura || g.dataCompra;
+          return inPeriodo(dataParcela);
+        });
+        return { ...g, pagamentos: pagamentosFiltrados };
+      })
+      // Só inclui gastos que tenham pelo menos uma parcela no período
+      .filter(g => g.pagamentos.length > 0);
     const doc = new jsPDF();
     doc.setFontSize(16);
     doc.text("Relatório de SAÍDAS (Gastos)", 14, 16);
     doc.setFontSize(10);
     doc.text(`Período: ${dataInicio || "início"} a ${dataFim || "hoje"}`, 14, 23);
+    // Total gasto no cabeçalho
+    const totalGasto = filtrados.reduce((sum, g) => sum + (g.valor || 0), 0);
+    doc.setFontSize(12);
+    doc.text(`Total gasto: ${formatCurrency(totalGasto)}`, 14, 30);
     autoTable(doc, {
-      startY: 28,
+      startY: 36,
       head: [[
         "Data da Compra",
         "Mercado/Loja",
@@ -105,10 +122,6 @@ export default function Relatorio() {
       headStyles: { fillColor: [59, 130, 246] },
       theme: 'striped',
     });
-    // Total gasto
-    const totalGasto = filtrados.reduce((sum, g) => sum + (g.valor || 0), 0);
-    doc.setFontSize(12);
-    doc.text(`Total gasto: ${formatCurrency(totalGasto)}`, 14, (doc as any).lastAutoTable.finalY + 10);
     doc.save("relatorio_gastos.pdf");
   }
 
