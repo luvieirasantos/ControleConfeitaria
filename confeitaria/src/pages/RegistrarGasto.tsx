@@ -35,15 +35,13 @@ export default function RegistrarGasto() {
       alert("Informe o valor do pagamento.");
       return;
     }
-    if (pagTipo === "cartao" && (!pagCartaoNome || !pagDiaVirada)) {
-      alert("Informe o nome do cartão e o dia de virada.");
-      return;
-    }
-    // Se for parcelado, criar várias parcelas
+    // Para cartão de crédito parcelado
     if (pagTipo === "cartao" && parcelado && qtdParcelas > 1) {
-      // Calcular vencimento da primeira parcela
-      const dataCompraStr = dataCompra; // dataCompraStr pode ser do input principal
-      const dataCompraDate = new Date(dataCompraStr || dataCompra);
+      if (!pagCartaoNome || !pagDiaVirada) {
+        alert("Informe o nome do cartão e o dia de virada.");
+        return;
+      }
+      const dataCompraDate = new Date(dataCompra);
       const diaVirada = typeof pagDiaVirada === 'number' ? pagDiaVirada : 1;
       let mesPrimeiraParcela = dataCompraDate.getMonth();
       let anoPrimeiraParcela = dataCompraDate.getFullYear();
@@ -73,14 +71,41 @@ export default function RegistrarGasto() {
         };
       });
       setPagamentos((prev: PagamentoInput[]) => [...prev, ...novasParcelas]);
-    } else {
+    } else if (pagTipo === "cartao") {
+      // Cartão de crédito à vista
+      if (!pagCartaoNome || !pagDiaVirada) {
+        alert("Informe o nome do cartão e o dia de virada.");
+        return;
+      }
+      const dataCompraDate = new Date(dataCompra);
+      const diaVirada = typeof pagDiaVirada === 'number' ? pagDiaVirada : 1;
+      let mesParcela = dataCompraDate.getMonth();
+      let anoParcela = dataCompraDate.getFullYear();
+      if (dataCompraDate.getDate() > diaVirada) {
+        mesParcela++;
+        if (mesParcela > 11) {
+          mesParcela = 0;
+          anoParcela++;
+        }
+      }
+      const venc = new Date(anoParcela, mesParcela, diaVirada as number);
       setPagamentos((prev: PagamentoInput[]) => [
         ...prev,
         {
           tipo: pagTipo,
           valor: pagValor,
-          cartaoNome: pagTipo === "cartao" ? pagCartaoNome : undefined,
-          vencimentoFatura: pagTipo === "cartao" ? pagVencimento : undefined,
+          cartaoNome: pagCartaoNome,
+          vencimentoFatura: venc.toISOString().split("T")[0],
+        }
+      ]);
+    } else {
+      // Dinheiro, Pix, Boleto: vencimento é a data da compra
+      setPagamentos((prev: PagamentoInput[]) => [
+        ...prev,
+        {
+          tipo: pagTipo,
+          valor: pagValor,
+          vencimentoFatura: dataCompra, // para filtro mensal
         }
       ]);
     }

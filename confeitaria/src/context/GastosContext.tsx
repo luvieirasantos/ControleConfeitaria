@@ -64,8 +64,8 @@ export function GastosProvider({ children }: { children: ReactNode }) {
         valor: gasto.valor,
         mercado: gasto.mercado,
         data_compra: gasto.dataCompra,
-        proxima_compra: gasto.proximaCompra,
-        observacao: gasto.observacao
+        proxima_compra: gasto.proximaCompra ? gasto.proximaCompra : null,
+        observacao: gasto.observacao ? gasto.observacao : null
       }])
       .select()
       .single();
@@ -75,10 +75,10 @@ export function GastosProvider({ children }: { children: ReactNode }) {
       gasto_id: insertedGasto.id,
       tipo: p.tipo,
       valor: p.valor,
-      cartao_nome: p.cartaoNome,
-      vencimento_fatura: p.vencimentoFatura,
-      parcela: p.parcela,
-      total_parcelas: p.totalParcelas
+      cartao_nome: p.cartaoNome ? p.cartaoNome : null,
+      vencimento_fatura: p.vencimentoFatura ? p.vencimentoFatura : null,
+      parcela: p.parcela ?? null,
+      total_parcelas: p.totalParcelas ?? null
     }));
     const { data: insertedPagamentos } = await supabase
       .from('pagamentos')
