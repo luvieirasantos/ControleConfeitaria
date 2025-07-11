@@ -9,6 +9,7 @@ import RegistrarGasto from "./pages/RegistrarGasto";
 import Resumo from "./pages/Resumo";
 import Gastos from "./pages/Gastos";
 import Relatorio from "./pages/Relatorio";
+import MigrarEncomendas from "./pages/MigrarEncomendas";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/resumo" element={<Resumo />} />
                 <Route path="/gastos" element={<Gastos />} />
                 <Route path="/relatorio" element={<Relatorio />} />
+                <Route path="/MigrarEncomendas" element={<MigrarEncomendas />} />
 
               </Routes>
             </div>
