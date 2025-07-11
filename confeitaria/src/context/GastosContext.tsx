@@ -48,7 +48,14 @@ export function GastosProvider({ children }: { children: ReactNode }) {
       // Relacionar pagamentos aos gastos
       const gastosComPagamentos = (gastosData || []).map(g => ({
         ...g,
-        pagamentos: (pagamentosData || []).filter(p => p.gasto_id === g.id)
+        pagamentos: (pagamentosData || [])
+          .filter(p => p.gasto_id === g.id)
+          .map(p => ({
+            ...p,
+            cartaoNome: p.cartao_nome,
+            vencimentoFatura: p.vencimento_fatura,
+            totalParcelas: p.total_parcelas,
+          }))
       }));
       setGastos(gastosComPagamentos);
     }
