@@ -75,15 +75,23 @@ export function EncomendasProvider({ children }: { children: ReactNode }) {
         data: e.data,
         produtos: (produtosData || [])
           .filter((p: any) => p.encomenda_id === e.id)
-          .map((p: any) => ({
-            id: p.id,
-            produto: p.produto,
-            sabor: p.sabor || undefined,
-            quantidade: Number(p.quantidade),
-            adicionais: p.adicionais ? JSON.parse(p.adicionais) : [],
-            valorUnitario: Number(p.valor_unitario),
-            valorTotal: Number(p.valor_total),
-          })),
+          .map((p: any) => {
+            let adicionaisArr = [];
+            try {
+              if (typeof p.adicionais === "string" && p.adicionais.trim().startsWith("[")) {
+                adicionaisArr = JSON.parse(p.adicionais);
+              }
+            } catch {}
+            return {
+              id: p.id,
+              produto: p.produto,
+              sabor: p.sabor || undefined,
+              quantidade: Number(p.quantidade),
+              adicionais: adicionaisArr,
+              valorUnitario: Number(p.valor_unitario),
+              valorTotal: Number(p.valor_total),
+            };
+          }),
       }));
       setEncomendas(encomendasComProdutos);
     }
@@ -148,15 +156,23 @@ export function EncomendasProvider({ children }: { children: ReactNode }) {
         data: e.data,
         produtos: (produtosData || [])
           .filter((p: any) => p.encomenda_id === e.id)
-          .map((p: any) => ({
-            id: p.id,
-            produto: p.produto,
-            sabor: p.sabor || undefined,
-            quantidade: Number(p.quantidade),
-            adicionais: p.adicionais ? JSON.parse(p.adicionais) : [],
-            valorUnitario: Number(p.valor_unitario),
-            valorTotal: Number(p.valor_total),
-          })),
+          .map((p: any) => {
+            let adicionaisArr = [];
+            try {
+              if (typeof p.adicionais === "string" && p.adicionais.trim().startsWith("[")) {
+                adicionaisArr = JSON.parse(p.adicionais);
+              }
+            } catch {}
+            return {
+              id: p.id,
+              produto: p.produto,
+              sabor: p.sabor || undefined,
+              quantidade: Number(p.quantidade),
+              adicionais: adicionaisArr,
+              valorUnitario: Number(p.valor_unitario),
+              valorTotal: Number(p.valor_total),
+            };
+          }),
       }));
       setEncomendas(encomendasComProdutos);
     }
@@ -201,15 +217,23 @@ export function EncomendasProvider({ children }: { children: ReactNode }) {
         data: e.data,
         produtos: (produtosData || [])
           .filter((p: any) => p.encomenda_id === e.id)
-          .map((p: any) => ({
-            id: p.id,
-            produto: p.produto,
-            sabor: p.sabor || undefined,
-            quantidade: Number(p.quantidade),
-            adicionais: p.adicionais ? JSON.parse(p.adicionais) : [],
-            valorUnitario: Number(p.valor_unitario),
-            valorTotal: Number(p.valor_total),
-          })),
+          .map((p: any) => {
+            let adicionaisArr = [];
+            try {
+              if (typeof p.adicionais === "string" && p.adicionais.trim().startsWith("[")) {
+                adicionaisArr = JSON.parse(p.adicionais);
+              }
+            } catch {}
+            return {
+              id: p.id,
+              produto: p.produto,
+              sabor: p.sabor || undefined,
+              quantidade: Number(p.quantidade),
+              adicionais: adicionaisArr,
+              valorUnitario: Number(p.valor_unitario),
+              valorTotal: Number(p.valor_total),
+            };
+          }),
       }));
       setEncomendas(encomendasComProdutos);
     }
