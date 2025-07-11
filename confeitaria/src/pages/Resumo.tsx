@@ -1,26 +1,61 @@
 import { useEncomendas } from "../context/EncomendasContext";
+import { useState } from "react";
+
+function filtrarPorPeriodo(encomendas, periodo) {
+  const hoje = new Date();
+  let dataLimite = null;
+  if (periodo === "7") {
+    dataLimite = new Date(hoje);
+    dataLimite.setDate(hoje.getDate() - 6);
+  } else if (periodo === "30") {
+    dataLimite = new Date(hoje);
+    dataLimite.setDate(hoje.getDate() - 29);
+  } else if (periodo === "mes") {
+    dataLimite = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+  }
+  if (!dataLimite) return encomendas;
+  return encomendas.filter(e => {
+    const dataE = new Date(e.data);
+    return dataE >= dataLimite && dataE <= hoje;
+  });
+}
 
 export default function Resumo() {
   const { encomendas } = useEncomendas();
+  const [periodo, setPeriodo] = useState("7");
 
   // Só considera encomendas não canceladas
   const validas = encomendas.filter(e => e.status !== "cancelada");
+  const filtradas = filtrarPorPeriodo(validas, periodo);
 
   // Soma correta: soma o valorTotal de todos os produtos de todas as encomendas válidas
-  const totalVendido = validas.reduce(
+  const totalVendido = filtradas.reduce(
     (sum, e) => sum + (e.produtos?.reduce((s, p) => s + (p.valorTotal || 0), 0) || 0),
     0
   );
-  const totalRecebido = validas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
+  const totalRecebido = filtradas.reduce((sum, e) => sum + (e.valorPago || 0), 0);
   const totalPendente = totalVendido - totalRecebido;
 
-  const totalEntregues = validas.filter(e => e.status === "entregue").length;
-  const totalFazendo = validas.filter(e => e.status === "fazendo").length;
+  const totalEntregues = filtradas.filter(e => e.status === "entregue").length;
+  const totalFazendo = filtradas.filter(e => e.status === "fazendo").length;
   const totalCanceladas = encomendas.filter(e => e.status === "cancelada").length;
 
   return (
     <div className="max-w-2xl mx-auto py-10">
       <h2 className="text-2xl font-bold mb-6 text-pink-500">Resumo Financeiro</h2>
+      <div className="mb-6 flex gap-4 items-center">
+        <label className="font-semibold text-gray-700">Período:</label>
+        <select
+          className="border rounded px-3 py-2"
+          value={periodo}
+          onChange={e => setPeriodo(e.target.value)}
+        >
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+          <option value="mes">Mês atual</option>
+          <option value="todos">Todos</option>
+        </select>
+      </div>
       <div className="grid grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-xl p-5 shadow flex flex-col">
           <span className="text-gray-500 text-sm mb-1">Total vendido (sem canceladas)</span>
@@ -51,9 +86,9 @@ export default function Resumo() {
       </div>
       <div className="text-sm text-gray-400">
         <ul>
-          <li>* <b>Total vendido:</b> soma de todos os pedidos não cancelados</li>
-          <li>* <b>Total recebido:</b> soma de todos os pagamentos já feitos</li>
-          <li>* <b>A receber:</b> diferença entre total vendido e recebido</li>
+          <li>* <b>Total vendido:</b> soma de todos os pedidos não cancelados do período</li>
+          <li>* <b>Total recebido:</b> soma de todos os pagamentos já feitos do período</li>
+          <li>* <b>A receber:</b> diferença entre total vendido e recebido do período</li>
         </ul>
       </div>
     </div>
