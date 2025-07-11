@@ -21,8 +21,7 @@ export default function Gastos() {
     return gastos.flatMap(g =>
       g.pagamentos
         .filter(p => {
-          // Se não houver vencimentoFatura, usa dataCompra
-          const data = p.vencimentoFatura || g.dataCompra;
+          const data = (p.vencimentoFatura || g.dataCompra || '').slice(0, 10);
           return data >= inicio && data <= fim;
         })
         .map(p => ({ gasto: g, pagamento: p }))
